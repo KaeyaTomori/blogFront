@@ -1,6 +1,6 @@
 # webFront
 
-个人学习制作博客
+个人学习制作博客前端页面，使用vue+element-ui
 
 参考博客源代码[@Hi-Dream-Blog](https://github.com/dateolive/Hi-Dream-Blog)
 
