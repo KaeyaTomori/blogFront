@@ -1,24 +1,10 @@
-# vue2
+# webFront
 
-## Project setup
-```
-yarn install
-```
+个人学习制作博客
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+参考博客源代码[@Hi-Dream-Blog](https://github.com/dateolive/Hi-Dream-Blog)
 
-### Compiles and minifies for production
-```
-yarn build
-```
+如有侵权请与我联系
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 更新日志
+2021.10.27 完成主页，关于我页面，文章页面（待解决的问题：rollText不生效）
