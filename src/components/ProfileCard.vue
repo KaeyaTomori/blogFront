@@ -192,7 +192,7 @@
           <el-collapse-item
             :title="item.title"
             :name="index"
-            v-for="(item,index) in profileCard.announcement"
+            v-for="(item,index) in profileCard.announcements"
             :key="index"
           >
             <div>{{ item.content }}</div>

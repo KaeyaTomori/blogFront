@@ -173,41 +173,40 @@ export default {
       ],
 
       currentPage: 1,
-      totalPage: 0,
+      totalPage: 1,
       pageSize: 5,
       screenWidth: document.body.clientWidth
     };
   },
   methods: {
-    page() {
-        //currentPage
-    //   const _this = this;
-    //   this.$axios
-    //     .get("/blogList", {
-    //       params: {
-    //         currentPage: currentPage
-    //       }
-    //     })
-    //     .then(res => {
-    //       _this.blogs = res.data.data;
-    //       // console.log(res.data.data)
-    //       _this.currentPage = res.data.currentPage;
-    //       _this.total = res.data.totalPage;
-          
-    //     });
-    //    this.scrollToTop()
+    
+    page(currentPage) {
+      const _this = this;
+      this.$axios
+        .get("/ArticleList", {
+          params: {
+            currentPage: currentPage
+          }
+        })
+        .then(res => {
+          _this.articles = res.data.data;
+          // console.log(res.data.data)
+          _this.currentPage = res.data.currentPage;
+          _this.totalPage = res.data.totalPage;
+        });
+      //  this.scrollToTop()
     }
   },
 
   mounted() {
-//     const that = this
-//     that.page(1);
-//      window.onresize = () => {
-//         return (() => {
-//             window.screenWidth = document.body.clientWidth
-//             that.screenWidth = window.screenWidth
-//         })()
-//     }
+    const that = this
+    that.page(1);
+     window.onresize = () => {
+        return (() => {
+            window.screenWidth = document.body.clientWidth
+            that.screenWidth = window.screenWidth
+        })()
+    }
   },
 
 //   watch:{

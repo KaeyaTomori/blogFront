@@ -67,18 +67,7 @@ name: "FriendsLink",
                 url: "http://localhost:2333",
                 avatar_url: "http://localhost:8080/image/head_avatar.jpg",
             },
-            {
-                id: "2",
-                name: "fuuya",
-                url: "http://localhost:2333",
-                avatar_url: "http://localhost:8080/image/head_avatar.jpg",
-            },
-            {
-                id: "3",
-                name: "fuuya",
-                url: "http://localhost:2333",
-                avatar_url: "http://localhost:8080/image/head_avatar.jpg",
-            },
+            
             
         ],
     //   dialogFormVisible: false,

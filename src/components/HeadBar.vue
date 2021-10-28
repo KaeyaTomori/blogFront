@@ -139,7 +139,7 @@
 
 /* banner底部高度 */
 #banner.home-banner {
-  height: 500px;
+  height: 550px;
 }
 
 #banner.home-banner .banner-img {
@@ -185,14 +185,14 @@
   text-align: center;
 }
 .focusinfo img {
-  width: 80px;
+  width: 100px;
   height: auto;
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.3);
 }
 .focusinfo .header-info {
   width: 60%;
-  font-size: 14px;
+  font-size: 16px;
   color: #eaeadf;
   background: rgba(0, 0, 0, 0.4);
   padding: 20px 30px;

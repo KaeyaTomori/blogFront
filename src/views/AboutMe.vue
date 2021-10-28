@@ -21,7 +21,7 @@
 
           <!-- <meting-js server="netease" type="playlist" list-folded="true" :id="introduction.musicId" theme="#25CCF7" v-if="introduction.musicId!==''"></meting-js> -->
 
-            <div class="user-favorites-list" v-for="item in profileCard.announcement" :key="item.title">
+            <div class="user-favorites-list" v-for="item in profileCard.announcements" :key="item.title">
             <div class="Favtitle">{{item.title}}</div>
             <div class="Favvalue">{{item.content}}</div>
             </div>

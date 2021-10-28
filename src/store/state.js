@@ -2,7 +2,7 @@ export default {
 	siteInfo: {
 		reward: 'http://localhost:8080/image/head_avatar.jpg',
 		headInfo: 'headInfo',
-		blogName: 'stateBlogName'
+		blogName: 'BlogName'
 	},
 	profileCard: {
 		imageUrl:'http://localhost:8080/image/card_bg.jpg',
@@ -14,7 +14,7 @@ export default {
 		rollText: [
 			""
 		],
-		announcement: [
+		announcements: [
           {
 			title: '关于本博客',
             content: '本博客使用了Hi-Dream-Blog的前端代码，如有侵权请联系',

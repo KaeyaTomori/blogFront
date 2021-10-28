@@ -39,11 +39,7 @@ export default {
           {
               id: '1',
               name: '分类1'
-          },
-          {
-              id: '2',
-              name: '分类2'
-          },
+          }
       ]
 
     };

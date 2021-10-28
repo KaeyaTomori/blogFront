@@ -8,7 +8,7 @@
         <el-row class="art-item">
           <el-card>
 
-            <div id="artcle-info" :style="{'background-image': 'url('+article.coverImage+')'}">
+            <div id="artcle-info" :style="{'background-image': 'url('+article.headImage+')'}">
               <h2 class="text-center">
                 <strong style=" color: #ffffff;">{{article.title}}</strong>
               </h2>
@@ -152,7 +152,7 @@ export default {
         // page: 0
       },
       article: {
-            coverImage: 'http://localhost:8080/image/avatar_bg.jpg',
+            headImage: 'http://localhost:8080/image/article_bg.png',
             title: '文章标题',
             createTime: '2021-10-26 00:00:00',
             updateTime: '2021-10-26 00:00:00',
