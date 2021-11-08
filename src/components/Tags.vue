@@ -9,12 +9,13 @@
             </div>
             <div class="text item">
                 <el-tag class="tag-item" v-for="tag in tags" v-bind:key="tag.id">
-                <keep-alive>
+                <!-- <keep-alive>
                     <router-link
                     :to="{name: 'list', params: {type:'tag',id: tag.id}}"
                     tag="span"
                     >{{tag.name}}</router-link>
-                </keep-alive>
+                </keep-alive> -->
+                {{tag.name}}
                 </el-tag>
             </div>
         </el-card>

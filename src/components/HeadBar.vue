@@ -26,7 +26,7 @@
         </el-menu-item> -->
         <!-- </el-submenu> -->
         <!-- <el-menu-item index="/archive">归档</el-menu-item> -->
-        <!-- <el-menu-item index="/moment">动态</el-menu-item> -->
+        <el-menu-item index="/moment">动态</el-menu-item>
         <!-- <el-menu-item index="/friends">友情链接</el-menu-item> -->
         <el-menu-item index="/aboutme">关于我</el-menu-item>
         </el-menu>
@@ -104,7 +104,7 @@
   }
 </script>
 
-<style>
+<style scope>
 /* 阴影效果头顶栏 */
 .headBack {
   width: 100%;

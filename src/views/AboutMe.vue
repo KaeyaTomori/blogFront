@@ -19,7 +19,7 @@
             <div class="user-info-list">{{profileCard.rollText}}</div>
             </div>
 
-          <!-- <meting-js server="netease" type="playlist" list-folded="true" :id="introduction.musicId" theme="#25CCF7" v-if="introduction.musicId!==''"></meting-js> -->
+          <meting-js server="netease" type="playlist" list-folded="true" :id="profileCard.musicId" theme="#25CCF7" v-if="profileCard.musicId!==''"></meting-js>
 
             <div class="user-favorites-list" v-for="item in profileCard.announcements" :key="item.title">
             <div class="Favtitle">{{item.title}}</div>
@@ -240,13 +240,19 @@ export default {
     };
   },
   methods: {
-    // getBlogCnt() {
-    //   const _this = this;
-    //   this.$axios.get("/blogsCount").then(res => {
-    //     //  console.log(res.data.data);
-    //     _this.blogCnt = res.data.data;
-    //   });
-    // },
+    toTop(){
+      window.scrollTo({
+         top:550,
+         behavior:"smooth"
+       });
+    },
+    getArticleCnt() {
+      const _this = this;
+      this.$axios.get("/article/count").then(res => {
+        //  console.log(res.data.data);
+        _this.articleCnt = res.data.data;
+      });
+    },
     // getMomentCnt() {
     //   const _this = this;
     //   this.$axios.get("/momentCount").then(res => {
@@ -256,31 +262,32 @@ export default {
     // }
   },
   mounted() {
-    // const that = this;
-    // that.getBlogCnt();
-    // that.getMomentCnt();
-    // window.onresize = () => {
-    //   return (() => {
-    //     window.screenWidth = document.body.clientWidth;
-    //     that.screenWidth = window.screenWidth;
-    //   })();
-    // };
+    const that = this;
+    that.getArticleCnt();
+    window.onresize = () => {
+      return (() => {
+        window.screenWidth = document.body.clientWidth;
+        that.screenWidth = window.screenWidth;
+      })();
+    };
+    // console.log(this.screenWidth);
+    this.toTop();
   },
   watch: {
-    // screenWidth(val) {
-    //   // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
-    //   if (!this.timer) {
-    //     // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
-    //     this.screenWidth = val;
-    //     this.timer = true;
-    //     let that = this;
-    //     setTimeout(function() {
-    //       // 打印screenWidth变化的值
-    //       // console.log(that.screenWidth)
-    //       that.timer = false;
-    //     }, 400);
-    //   }
-    // }
+    screenWidth(val) {
+      // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+      if (!this.timer) {
+        // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+        this.screenWidth = val;
+        this.timer = true;
+        let that = this;
+        setTimeout(function() {
+          // 打印screenWidth变化的值
+          console.log(that.screenWidth)
+          that.timer = false;
+        }, 400);
+      }
+    }
   }
 };
 </script>

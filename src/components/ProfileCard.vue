@@ -225,7 +225,6 @@ export default {
 
   watch: {
     "profileCard.rollText"() {
-      console.log("rolltext run");
       if (this.profileCard.rollText.length != 0) {
         //等待 id="rollText"的div加载完毕
         this.$nextTick(() => {
@@ -238,7 +237,6 @@ export default {
   methods: {
     rollText() {
       let r = document.getElementById("rollText");
-      console.log("rolltext run");
       let l = "";
       let o = this.profileCard.rollText.map(function(r) {
         return r + "";

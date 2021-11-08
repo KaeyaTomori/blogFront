@@ -26,7 +26,7 @@
 
 
 
-<script>
+<script scoped>
 export default {
   name: 'App',
   components: {

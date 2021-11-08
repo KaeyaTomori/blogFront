@@ -6,6 +6,13 @@
       
       <!-- 文章列表 -->
       <el-col :span="screenWidth>750?16:24">
+
+        <div v-if="titleInfo != ''">
+          <el-card class="atrtitle" style="text-align: center">
+            <h2 class="titleinfo">{{titleInfo}}</h2>
+          </el-card>
+        </div>
+
         <el-row
           class="recent-posts"
           id="recent-posts"
@@ -16,7 +23,7 @@
 
             <div :class="index%2!=0?'post_cover right_radius':'post_cover left_radius'">
               <keep-alive>
-                <router-link :to="{name: 'article', params: {id: article.id}}" tag="span">
+                <router-link :to="{name: 'article', params: {articleId: article.id}}" tag="span">
                   <img
                     :src="article.coverImage"
                     style="cursor: pointer;"
@@ -30,7 +37,7 @@
               <div class="article-title">
                 <keep-alive>
                   <router-link
-                    :to="{name: 'article', params: {id: article.id}}"
+                    :to="{name: 'article', params: {articleId: article.id}}"
                     tag="span"
                     class="article-title"
                   >
@@ -54,11 +61,11 @@
                   <span class="article-meta-label">更新于</span>
                   <span class="post-meta-date-updated">{{article.updateTime}}</span>
                 </span>
-                <span class="article-meta" v-if="article.cateGory">
+                <!-- <span class="article-meta" v-if="article.cateGory">
                   <span class="article-meta__separator">|</span>
                   <i class="el-icon-folder-opened"></i>
                   <span href class="article-meta__categories">{{article.categoryName}}</span>
-                </span>
+                </span> -->
                 <span class="article-meta">
                   <span class="article-meta__separator">|</span>
                   <i class="el-icon-view"></i>
@@ -100,18 +107,7 @@
 
         <!-- 右侧信息栏 -->
       <el-col :span="6" class="hidden-sm-and-down" id="side">
-        <div class="item">
-          <ProfileCard />
-        </div>
-        <div class="item">
-          <Categorys />
-        </div>
-        <div class="item">
-          <Tags />
-        </div>
-        <div class="item">
-          <FriendsLink />
-        </div>
+        <Sider/>
       </el-col>
 
     </el-row>
@@ -122,11 +118,14 @@
 
 
 <script>
+import Sider from '../components/Sider.vue';
 export default {
   name: "HomePage",
-  components: {},
+  components: {Sider},
   data() {
     return {
+      titleInfo:'',
+      categoryId: 0,
       articles: [
         {
             id: 1,
@@ -136,7 +135,7 @@ export default {
             is_top: '0',
             createTime: '2021-10-26 00:00:00',
             updateTime: '2021-10-26 00:00:00',
-            categoryName: '默认分类',
+            // categoryName: '默认分类',
             visits: '233',
             commentCnt: '2233',
             likes: '2333',
@@ -156,20 +155,6 @@ export default {
             likes: '2333',
             summary: '这里是第二篇文章的摘要',
         },
-        {
-            id: 3,
-            name: 'default',
-            coverImage: 'http://localhost:8080/image/1.jpg',
-            title: '第三篇文章',
-            is_top: '0',
-            createTime: '2021-10-26 00:00:00',
-            updateTime: '2021-10-26 00:00:00',
-            categoryName: '默认分类',
-            visits: '233',
-            commentCnt: '2233',
-            likes: '2333',
-            summary: '这里是第三篇文章的摘要',
-        },
       ],
 
       currentPage: 1,
@@ -179,28 +164,56 @@ export default {
     };
   },
   methods: {
-    
-    page(currentPage) {
+    toTop(){
+      window.scrollTo({
+         top:550,
+         behavior:"smooth"
+       });
+    },
+    init() {
       const _this = this;
       this.$axios
-        .get("/ArticleList", {
+        .get("/article/list/"+1, {
           params: {
-            currentPage: currentPage
+            categoryId: this.categoryId
           }
         })
         .then(res => {
-          _this.articles = res.data.data;
-          // console.log(res.data.data)
-          _this.currentPage = res.data.currentPage;
-          _this.totalPage = res.data.totalPage;
+          _this.articles = res.data.data.list;
+          _this.currentPage = res.data.data.pageNum;
+          _this.totalPage=res.data.data.pages;
         });
-      //  this.scrollToTop()
+    },
+    page(currentPage) {
+      const _this = this;
+      this.$axios
+        .get("/article/list/"+currentPage, {
+          params: {
+            categoryId: this.categoryId
+          }
+        })
+        .then(res => {
+          // console.log(res.data.data)
+          _this.articles = res.data.data.list;
+          _this.currentPage = res.data.data.pageNum;
+          _this.totalPage=res.data.data.pages;
+        });
+      this.toTop();
     }
   },
 
   mounted() {
     const that = this
-    that.page(1);
+    if(this.$route.params.titleInfo){
+      this.titleInfo=this.$route.params.titleInfo + "的所有文章";
+      this.categoryId=this.$route.params.categoryId;
+      // console.log(this.categoryId);
+      this.page(1);
+    }else{
+      this.titleInfo="";
+      this.categoryId=0;
+      this.init(1);
+    }
      window.onresize = () => {
         return (() => {
             window.screenWidth = document.body.clientWidth
@@ -209,22 +222,34 @@ export default {
     }
   },
 
-//   watch:{
-//     screenWidth(val){
-//         // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
-//         if(!this.timer){
-//             // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
-//             this.screenWidth = val
-//             this.timer = true
-//             let that = this
-//             setTimeout(function(){
-//                 // 打印screenWidth变化的值
-//                // console.log(that.screenWidth)
-//                 that.timer = false
-//             },400)
-//         }
-//     }
-//     }
+  watch:{
+    $route(){
+        if(this.$route.params.titleInfo){
+        this.titleInfo=this.$route.params.titleInfo + "的所有文章";
+        this.categoryId=this.$route.params.categoryId;
+        // console.log(this.categoryId);
+        this.page(1);
+        }else{
+          this.titleInfo="";
+          this.categoryId=0;
+          this.init(1);
+        }
+    },
+    screenWidth(val){
+        // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+        if(!this.timer){
+            // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+            this.screenWidth = val
+            this.timer = true
+            let that = this
+            setTimeout(function(){
+                // 打印screenWidth变化的值
+               // console.log(that.screenWidth)
+                that.timer = false
+            },400)
+        }
+    }
+  }
 };
 </script>
 
@@ -593,5 +618,12 @@ h5 {
   #recent-posts .recent-post-item .recent-post-info .content {
     height: auto;
   }
+}
+
+.atrtitle{
+  margin-bottom: 50px;
+}
+.titleinfo{
+  letter-spacing: 2px;
 }
 </style>

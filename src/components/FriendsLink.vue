@@ -18,7 +18,7 @@
             <el-row :gutter="20">
                 <el-col :span="12" class="friend"  v-for="friend in friends" v-bind:key="friend.id">
                 <div class="logo">
-                    <el-avatar :src="friend.avatar_url" alt />
+                    <el-avatar :src="friend.avatar" alt />
                 </div>
                 <div class="link">
                     <a :href="friend.url">{{friend.name}}</a>
@@ -55,7 +55,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
 name: "FriendsLink",
   data() {
@@ -65,7 +65,7 @@ name: "FriendsLink",
                 id: "1",
                 name: "fuuya",
                 url: "http://localhost:2333",
-                avatar_url: "http://localhost:8080/image/head_avatar.jpg",
+                avatar: "http://localhost:8080/image/head_avatar.jpg",
             },
             
             
@@ -76,11 +76,11 @@ name: "FriendsLink",
   },
   methods: {
     getFriends() {
-    //   const _this = this;
-    //   this.$axios.get("/allFriends").then(res => {
-    //     // console.log(res.data.data);
-    //     _this.friends = res.data.data;
-    //   });
+      const _this = this;
+      this.$axios.get("/friends/all").then(res => {
+        // console.log(res.data.data);
+        _this.friends = res.data.data;
+      });
     },
     saveEdit() {
       //申请友链

@@ -17,17 +17,19 @@ Vue.prototype.$axios = axios
 import App from './App.vue'
 import HeadBar from './components/HeadBar'
 import FooterZone from './components/FooterZone'
-import FriendsLink from './components/FriendsLink'
-import ProfileCard from './components/ProfileCard'
-import Categorys from './components/Categorys'
-import Tags from './components/Tags'
+// import FriendsLink from './components/FriendsLink'
+// import ProfileCard from './components/ProfileCard'
+// import Categorys from './components/Categorys'
+// import Tags from './components/Tags'
+import Sider from './components/Sider'
 
 Vue.component("HeadBar",HeadBar)
 Vue.component("FooterZone",FooterZone)
-Vue.component("FriendsLink",FriendsLink)
-Vue.component("ProfileCard",ProfileCard)
-Vue.component("Categorys",Categorys)
-Vue.component("Tags",Tags)
+// Vue.component("FriendsLink",FriendsLink)
+// Vue.component("ProfileCard",ProfileCard)
+// Vue.component("Categorys",Categorys)
+// Vue.component("Tags",Tags)
+Vue.component("Sider",Sider)
 
 Vue.config.productionTip = false
 

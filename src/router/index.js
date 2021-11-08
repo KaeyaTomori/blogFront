@@ -5,10 +5,10 @@ import store from '../store'
 import HomePage from '../views/HomePage.vue'
 import Article from '../views/Article.vue'
 import AboutMe from '../views/AboutMe.vue'
-// import Archive from '../views/Archive.vue'
-// import BlogsByParams from '../components/BlogsByTagCate.vue'
+import Archive from '../views/Archive.vue'
+import Moment from '../views/Moment.vue'
 // import friends from '../views/Friends.vue'
-// import Moment from '../views/Moment.vue'
+// import BlogsByParams from '../components/BlogsByTagCate.vue'
 
 Vue.use(VueRouter)
 
@@ -29,7 +29,7 @@ const routes = [
     }
   },
   {
-    path: '/article/:id',
+    path: '/article/:articleId',
     name: 'article',
     component: Article,
     meta: {
@@ -47,7 +47,7 @@ const routes = [
   {
     path: '/archive',
     name: 'archive',
-    // component: Archive,
+    component: Archive,
     meta: {
       title: '归档'
     }
@@ -55,15 +55,15 @@ const routes = [
   {
     path: '/moment',
     name: 'moment',
-    // component: Moment,
+    component: Moment,
     meta: {
       title: '动态说说'
     }
   },
   {
-    path: '/list/:type/:id',
+    path: '/list/:titleInfo/:categoryId',
     name: 'list',
-    // component: BlogsByParams,
+    component: HomePage,
     meta: {
       title: '文章'
     }

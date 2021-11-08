@@ -8,7 +8,7 @@
         <el-row class="art-item">
           <el-card>
 
-            <div id="artcle-info" :style="{'background-image': 'url('+article.headImage+')'}">
+            <div id="artcle-info" :style="{'background-image': 'url('+headImage+')'}">
               <h2 class="text-center">
                 <strong style=" color: #ffffff;">{{article.title}}</strong>
               </h2>
@@ -115,18 +115,7 @@
 
 
       <el-col :span="6" class="hidden-sm-and-down" id="side">
-        <div class="item">
-          <ProfileCard />
-        </div>
-        <div class="item">
-          <Categorys />
-        </div>
-        <div class="item">
-          <Tags />
-        </div>
-        <div class="item">
-          <FriendsLink />
-        </div>
+        <Sider/>
         <div class="item is-position-fixed">
           <!--只在文章页面显示目录-->
 			<!-- <Tocbot /> -->
@@ -140,8 +129,8 @@
 </template>
 
 <script>
-import ProfileCard from '../components/ProfileCard.vue';
-// import {mapState} from "vuex";
+import {mapState} from "vuex";
+import Sider from '../components/Sider.vue';
 // import Tocbot from "@/components/Tocbot";
 export default {
   name: "articledetail",
@@ -151,6 +140,7 @@ export default {
         // blog_id: 0,
         // page: 0
       },
+      headImage: 'http://localhost:8080/image/article_bg.png',
       article: {
             headImage: 'http://localhost:8080/image/article_bg.png',
             title: '文章标题',
@@ -167,15 +157,15 @@ export default {
     };
   },
   components:{
-    ProfileCard
+    Sider
     // Tocbot
   },
   computed: {
-// 		blogId() {
-// 				return parseInt(this.$route.params.blogId)
-//       },
-//       ...mapState(['siteInfo'])
-// 		},
+		articleId() {
+				return parseInt(this.$route.params.articleId)
+      },
+      ...mapState(['siteInfo'])
+		// },
 //   beforeRouteEnter(to, from, next) {
 // 			//路由到博客文章页面之前，应将文章的渲染完成状态置为 false
 // 			next(vm => {
@@ -206,96 +196,103 @@ export default {
 // 			}
 		},
   methods: {
-    // getBlog(blogId = this.blogId) {
-    //   const _this = this;
-    //   this.$axios.get("/blog/" + blogId).then(res => {
-    //     // console.log(res.data.data)
-    //     if(res.data.code===200){
-    //               _this.blog = res.data.data;
-    //     _this.propsData.blog_id = res.data.data.blog_id;
-    //     _this.$nextTick(() => {
-    //       Prism.highlightAll();
-    //       this.$store.dispatch('setIsBlogRenderComplete', true)
-    //     });
-    //       document.title = this.blog.blog_title+this.siteInfo.webTitleSuffix
-    //     }
+    toTop(){
+      window.scrollTo({
+         top:550,
+         behavior:"smooth"
+       });
+    },
+    getArticle(articleId = this.articleId) {
+      const _this = this;
+      this.$axios.get("/article/get/" + articleId).then(res => {
+        
+        if(res.data.code===200){
+          _this.article = res.data.data;
+          // _this.propsData.blog_id = res.data.data.blog_id;
+          _this.$nextTick(() => {
+          // Prism.highlightAll();
+          this.$store.dispatch('setIsBlogRenderComplete', true)
+        });
+          document.title = this.article.title+this.siteInfo.webTitleSuffix
+        }
+      });
 
-    //   });
-    //   this.scrollToTop();
+      // this.scrollToTop();
     //   // console.log(blogId);
-    // },
-    // setCookie(key, value, expiredays) {
-    //   var exdate = new Date();
-    //   exdate.setDate(exdate.getDate() + expiredays);
-    //   document.cookie =
-    //     key +
-    //     "=" +
-    //     escape(value) +
-    //     (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
-    // },
-    // getCookie(key) {
-    //   if (document.cookie.length) {
-    //     var cookies = " " + document.cookie;
-    //     var start = cookies.indexOf(" " + key + "=");
-    //     if (start == -1) {
-    //       return null;
-    //     }
-    //     var end = cookies.indexOf(";", start);
-    //     if (end == -1) {
-    //       end = cookies.length;
-    //     }
-    //     end -= start;
-    //     var cookie = cookies.substr(start, end);
-    //     return unescape(
-    //       cookie.substr(
-    //         cookie.indexOf("=") + 1,
-    //         cookie.length - cookie.indexOf("=") + 1
-    //       )
-    //     );
-    //   } else {
-    //     return null;
-    //   }
-    // },
+    },
+    setCookie(key, value, expiredays) {
+      var exdate = new Date();
+      exdate.setDate(exdate.getDate() + expiredays);
+      document.cookie =
+        key +
+        "=" +
+        escape(value) +
+        (expiredays == null ? "" : ";expires=" + exdate.toGMTString());
+    },
+    getCookie(key) {
+      if (document.cookie.length) {
+        var cookies = " " + document.cookie;
+        var start = cookies.indexOf(" " + key + "=");
+        if (start == -1) {
+          return null;
+        }
+        var end = cookies.indexOf(";", start);
+        if (end == -1) {
+          end = cookies.length;
+        }
+        end -= start;
+        var cookie = cookies.substr(start, end);
+        return unescape(
+          cookie.substr(
+            cookie.indexOf("=") + 1,
+            cookie.length - cookie.indexOf("=") + 1
+          )
+        );
+      } else {
+        return null;
+      }
+    },
     LikeBlog() {
-    //   const articleId = this.$route.params.id;
-    //   const _this = this;
-    //   if (_this.getCookie("likeblog" + blogId) == null) {
-    //     this.$axios.post("/likeBlog/" + blogId).then(res => {
-    //       _this.$message.success(res.data.msg);
-    //       _this.setCookie("likeblog" + blogId, blogId, 365);
-    //     });
-    //   } else {
-    //     _this.$message.warning("你已经点赞了");
-    //   }
+      const articleId = this.$route.params.articleId;
+      const _this = this;
+      if (_this.getCookie("articlelike" + articleId) == null) {
+        this.$axios.post("/article/like/" + articleId).then(res => {
+          _this.$message.success(res.data.msg);
+          _this.setCookie("articlelike" + articleId, articleId, 365);
+        });
+      } else {
+        _this.$message.warning("你已经点赞了");
+      }
     }
   },
   created(){
-    // this.getBlog();
+    this.getArticle();
   },
   mounted() {
-    // const that = this;
-    // window.onresize = () => {
-    //   return (() => {
-    //     window.screenWidth = document.body.clientWidth;
-    //     that.screenWidth = window.screenWidth;
-    //   })();
-    // };
+    const that = this;
+    window.onresize = () => {
+      return (() => {
+        window.screenWidth = document.body.clientWidth;
+        that.screenWidth = window.screenWidth;
+      })();
+    };
+    this.toTop();
   },
   watch: {
-    // screenWidth(val) {
-    //   // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
-    //   if (!this.timer) {
-    //     // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
-    //     this.screenWidth = val;
-    //     this.timer = true;
-    //     let that = this;
-    //     setTimeout(function() {
-    //       // 打印screenWidth变化的值
-    //       // console.log(that.screenWidth)
-    //       that.timer = false;
-    //     }, 400);
-    //   }
-    // }
+    screenWidth(val) {
+      // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+      if (!this.timer) {
+        // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+        this.screenWidth = val;
+        this.timer = true;
+        let that = this;
+        setTimeout(function() {
+          // 打印screenWidth变化的值
+          // console.log(that.screenWidth)
+          that.timer = false;
+        }, 400);
+      }
+    }
   }
 }
 </script>
